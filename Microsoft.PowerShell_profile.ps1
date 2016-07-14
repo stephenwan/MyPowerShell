@@ -9,3 +9,4 @@ New-Alias -name vpn-off -value Disable-TeleoptiVpn -description "Disable Teleopt
 New-Alias -name restore-to-local -value  Start-TeleoptiRestoreToLocal -description "Teleopti Restore to Local" -option ReadOnly
 New-Alias -name challenger -value New-TeleoptiChallenger -description "Teleopti Challenger" -option ReadOnly
 New-Alias -name devbuild -value New-DevBuild -description "Teleopti Devbuild" -option ReadOnly
+New-Alias -name github -value New-GitHub -description "Github" -option ReadOnly

@@ -42,7 +42,6 @@ function Get-TeleoptiVpn {
     return;   
 }
 
-
 function Disable-TeleoptiVpn {
     $current = Get-TeleoptiVpn
     if ($current -ne $null) { 
@@ -105,12 +104,18 @@ function New-DevBuild {
     Write-Host "New devbuild started in Chrome."
 }
 
+function New-GitHub {
+    Disable-TeleoptiVpn
+    $url = "https://github.com"
+    & $Chrome $url
+    Write-Host "Github started in Chrome."
+}
+
 
 Export-ModuleMember -Function 'Start-*'
 Export-ModuleMember -Function 'Enter-*'
 Export-ModuleMember -Function 'Enable-*'
 Export-ModuleMember -Function 'Disable-*'
 Export-ModuleMember -Function 'Get-TeleoptiVpn'
-Export-ModuleMember -Function 'New-TeleoptiChallenger'
-Export-ModuleMember -Function 'New-DevBuild'
+Export-ModuleMember -Function 'New-*'
 Export-ModuleMember -Variable 'Teleopti*'
