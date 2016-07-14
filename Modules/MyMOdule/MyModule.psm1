@@ -1,7 +1,7 @@
 $TeleoptiDebug = "$Env:Teleopti\.debug-Setup"
 $TeleoptiWFM = "$Env:Teleopti\Teleopti.Ccc.Web\Teleopti.Ccc.Web\WFM"
 $TeleoptiStyleguide = "$Env:GitRepo\styleguide"
-$TeleoptiVpn = "vpn","typhoon"
+$TeleoptiVpn = typhoon","vpn"
 
 $Emacs = "C:\Program Files (x86)\GNU\emacs\bin\runemacs.exe"
 $Chrome = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
@@ -13,11 +13,11 @@ function Start-Emacs {
     } else {
         $filename = $args[0]
         Start-Process $Emacs -ArgumentList "--find $filename"
-    }     
+    }
 }
 
 function Enter-TeleoptiDebug {
-    Set-Location $TeleoptiDebug 
+    Set-Location $TeleoptiDebug
 }
 
 function Enter-TeleoptiWFM {
@@ -29,28 +29,28 @@ function Enter-TeleoptiStyleguide {
 }
 
 function Get-TeleoptiVpn {
-    
+
     $interfaceAlias = Get-NetIPAddress | ForEach-Object { $_.InterfaceAlias }
 
     foreach ($item in $TeleoptiVpn) {
         if ($interfaceAlias -contains $item) {
-            Write-Host "Current vpn connection is $item."     
+            Write-Host "Current vpn connection is $item."
             return $item;
         }
     }
 
-    return;   
+    return;
 }
 
 function Disable-TeleoptiVpn {
     $current = Get-TeleoptiVpn
-    if ($current -ne $null) { 
-        Write-Host "Disconnecting from $current..."       
+    if ($current -ne $null) {
+        Write-Host "Disconnecting from $current..."
         rasdial $current /DISCONNECT
     }
 }
 
-function Enable-TeleoptiVpn {    
+function Enable-TeleoptiVpn {
     $vpn = Get-TeleoptiVpn
 
     if ($vpn -eq $null) {
@@ -76,7 +76,7 @@ function Enable-TeleoptiVpn {
         return $vpn
     }
 
-    Write-Error "Cannot connect to $TeleoptiVpns within the retry limit."    
+    Write-Error "Cannot connect to $TeleoptiVpns within the retry limit."
 }
 
 function Start-TeleoptiRestoreToLocal {
