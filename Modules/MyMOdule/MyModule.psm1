@@ -1,7 +1,7 @@
 $TeleoptiDebug = "$Env:Teleopti\.debug-Setup"
 $TeleoptiWFM = "$Env:Teleopti\Teleopti.Ccc.Web\Teleopti.Ccc.Web\WFM"
 $TeleoptiStyleguide = "$Env:GitRepo\styleguide"
-$TeleoptiVpn = typhoon","vpn"
+$TeleoptiVpn = "typhoon","vpn"
 
 $Emacs = "C:\Program Files (x86)\GNU\emacs\bin\runemacs.exe"
 $Chrome = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
