@@ -12,7 +12,7 @@ function Start-Emacs {
         Start-Process $Emacs
     } else {
         $filename = $args[0]
-        Start-Process $Emacs -ArgumentList $filename
+        Start-Process $Emacs -ArgumentList "--find $filename"
     }     
 }
 
