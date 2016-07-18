@@ -80,7 +80,11 @@ function Enable-TeleoptiVpn {
 }
 
 function Start-TeleoptiRestoreToLocal {
-    Enable-TeleoptiVpn
+    $vpn = Enable-TeleoptiVpn
+	if ($vpn -eq $null) {
+		Write-Error "Aborted! Cannot establish VPN connection."
+		return
+	}
     Write-Host "Starting Teleopti Restore To Local..."
     $p = Start-Process "$TeleoptiDebug\Restore to Local.bat" -Wait
     if ($p.ExitCode -eq 0) {
@@ -91,14 +95,24 @@ function Start-TeleoptiRestoreToLocal {
 }
 
 function New-TeleoptiChallenger {
-    Enable-TeleoptiVpn
+    $vpn = Enable-TeleoptiVpn
+	if ($vpn -eq $null) {
+		Write-Error "Aborted! Cannot establish VPN connection."
+		return
+	}
+
     $url = "http://challenger:8080/Kanban/#/board/0"
     & $Chrome $url
     Write-Host "New challenger started in Chrome."
 }
 
 function New-DevBuild {
-    Enable-TeleoptiVpn
+    $vpn = Enable-TeleoptiVpn
+	if ($vpn -eq $null) {
+		Write-Error "Aborted! Cannot establish VPN connection."
+		return
+	}
+
     $url = "http://devbuild01.toptinet.teleopti.com/project.html?projectId=TeleoptiWFM&tab=projectOverview"
     & $Chrome $url
     Write-Host "New devbuild started in Chrome."
@@ -109,6 +123,16 @@ function New-GitHub {
     $url = "https://github.com"
     & $Chrome $url
     Write-Host "Github started in Chrome."
+}
+
+function Start-TeleoptiSourcePull {
+	$vpn = Enable-TeleoptiVpn
+	if ($vpn -eq $null) {
+		Write-Error "Aborted! Cannot establish VPN connection."
+		return
+	}
+	Enter-TeleoptiWFM
+	hg pull
 }
 
 

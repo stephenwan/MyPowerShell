@@ -10,3 +10,4 @@ New-Alias -name restore-to-local -value  Start-TeleoptiRestoreToLocal -descripti
 New-Alias -name challenger -value New-TeleoptiChallenger -description "Teleopti Challenger" -option ReadOnly
 New-Alias -name devbuild -value New-DevBuild -description "Teleopti Devbuild" -option ReadOnly
 New-Alias -name github -value New-GitHub -description "Github" -option ReadOnly
+New-Alias -name pull -value Start-TeleoptiSourcePull -description "Pull Teleopti Source Code" -option ReadOnly
