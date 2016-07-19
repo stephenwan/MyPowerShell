@@ -11,3 +11,10 @@ New-Alias -name challenger -value New-TeleoptiChallenger -description "Teleopti 
 New-Alias -name devbuild -value New-DevBuild -description "Teleopti Devbuild" -option ReadOnly
 New-Alias -name github -value New-GitHub -description "Github" -option ReadOnly
 New-Alias -name pull -value Start-TeleoptiSourcePull -description "Pull Teleopti Source Code" -option ReadOnly
+New-Alias -name explore -value Select-File -description "Select file in explorer" -option ReadOnly
+New-Alias -name find -value Find-HgFile -description "Find Teleopti source file" -option ReadOnly
+
+function Reset-MyModule {
+	Remove-Module MyModule
+	Import-Module MyModule
+}

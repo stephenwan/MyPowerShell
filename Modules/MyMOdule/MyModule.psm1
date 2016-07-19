@@ -136,10 +136,51 @@ function Start-TeleoptiSourcePull {
 }
 
 
+function open-file($path) {
+	Start-Process explorer.exe -ArgumentList "/select,$path"
+}
+
+function Select-File {
+	Begin {
+		$paths = @()
+		foreach ($p in $args) {
+			if ([string]::IsNullOrWhiteSpace($p)) {
+				return
+			}
+			$path = Resolve-Path $p
+			$paths += "$path"
+			open-file -path $path
+		}
+	}
+	Process {
+		if ($_ -eq $null) {
+			return
+		}
+		$path = Resolve-Path $_
+		$paths += "$path"
+		open-file -path $path
+	}
+	End {
+		return $paths
+	}
+}
+
+function Find-HgFile {
+	Enter-TeleoptiWFM
+	if ($args.Length -eq 0) {
+		return
+	}
+	$pattern = $args[0]
+	hg file | Select-String -pattern $pattern | ForEach { Resolve-Path $_ }
+}
+
+
 Export-ModuleMember -Function 'Start-*'
 Export-ModuleMember -Function 'Enter-*'
 Export-ModuleMember -Function 'Enable-*'
 Export-ModuleMember -Function 'Disable-*'
 Export-ModuleMember -Function 'Get-TeleoptiVpn'
 Export-ModuleMember -Function 'New-*'
+Export-ModuleMember -Function 'Select-*'
+Export-ModuleMember -Function 'Find-*'
 Export-ModuleMember -Variable 'Teleopti*'
