@@ -6,13 +6,16 @@ New-Alias -name teleopti -value Enter-TeleoptiDebug -description "Teleopti Debug
 New-Alias -name wfm -value Enter-TeleoptiWFM -description "Teleopti WFM" -option ReadOnly
 New-Alias -name vpn -value Enable-TeleoptiVpn -description "Enable Teleopti VPN" -option ReadOnly
 New-Alias -name vpn-off -value Disable-TeleoptiVpn -description "Disable Teleopti VPN" -option ReadOnly
-New-Alias -name restore-to-local -value  Start-TeleoptiRestoreToLocal -description "Teleopti Restore to Local" -option ReadOnly
+New-Alias -name restore -value  Start-TeleoptiRestoreToLocal -description "Teleopti Restore to Local" -option ReadOnly
 New-Alias -name challenger -value New-TeleoptiChallenger -description "Teleopti Challenger" -option ReadOnly
 New-Alias -name devbuild -value New-DevBuild -description "Teleopti Devbuild" -option ReadOnly
 New-Alias -name github -value New-GitHub -description "Github" -option ReadOnly
 New-Alias -name pull -value Start-TeleoptiSourcePull -description "Pull Teleopti Source Code" -option ReadOnly
 New-Alias -name explore -value Select-File -description "Select file in explorer" -option ReadOnly
 New-Alias -name find -value Find-HgFile -description "Find Teleopti source file" -option ReadOnly
+New-Alias -name build -value Start-TeleoptiBuild -description "Build Teleopti solution" -option ReadOnly
+New-Alias -name google -value Search-Google -description "Search with Google" -option ReadOnly
+New-Alias -name bing -value Search-Bing -description "Search with Bing" -option ReadOnly
 
 function Reset-MyModule {
 	Remove-Module MyModule
