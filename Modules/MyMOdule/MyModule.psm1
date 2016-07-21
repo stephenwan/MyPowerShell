@@ -17,7 +17,7 @@ function Start-Emacs {
         Start-Process $RunEmacs
     } else {
         $filename = $args[0]
-        Start-Process $Emacs -ArgumentList "--find $filename"
+        Start-Process $RunEmacs -ArgumentList "--find $filename"
     }
 }
 
@@ -31,6 +31,28 @@ function Enter-TeleoptiWFM {
 
 function Enter-TeleoptiStyleguide {
     Set-Location $TeleoptiStyleguide
+}
+
+function Enter-Desktop {
+	Set-Location ([environment]::GetFolderPath("Desktop"))
+}
+
+function Enter-MyDocuments {
+	Set-Location ([environment]::GetFolderPath("MyDocument"))
+}
+
+function Open-DailyWorkbench {
+	$workbenchDir = Join-Path ([environment]::GetFolderPath("MyDocument")) "Workbench"
+	$month = [DateTime]::Today.ToString("MMM")
+	$day = [DateTime]::Today.ToString("dd")
+	$container = Join-Path $workbenchDir $month
+
+	if (-not (Test-Path $container)) {
+		New-Item -ItemType Directory -Force -Path $container
+	}
+
+	$dailyWork = Join-Path $container "$day.org"
+	Start-Emacs $dailyWork
 }
 
 function Get-TeleoptiVpn {
@@ -219,5 +241,8 @@ Export-ModuleMember -Function 'New-*'
 Export-ModuleMember -Function 'Select-*'
 Export-ModuleMember -Function 'Find-*'
 Export-ModuleMember -Function 'Search-*'
+Export-ModuleMember -Function 'hide-*'
+Export-ModuleMember -Function 'Show-*'
+Export-ModuleMember -Function 'Open-*'
 Export-ModuleMember -Variable 'Teleopti*'
 Export-ModuleMember -Variable 'Run*'
