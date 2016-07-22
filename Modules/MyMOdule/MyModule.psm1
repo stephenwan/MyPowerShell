@@ -44,7 +44,7 @@ function Enter-MyDocuments {
 function Open-DailyWorkbench {
 	$workbenchDir = Join-Path ([environment]::GetFolderPath("MyDocument")) "Workbench"
 	$month = [DateTime]::Today.ToString("MMM")
-	$day = [DateTime]::Today.ToString("dd")
+	$day = [DateTime]::Today.ToString("yyyy-MM-dd")
 	$container = Join-Path $workbenchDir $month
 
 	if (-not (Test-Path $container)) {
@@ -110,12 +110,7 @@ function Start-TeleoptiRestoreToLocal {
 		return
 	}
     Write-Host "Starting Teleopti Restore To Local..."
-    $p = Start-Process "$TeleoptiDebug\Restore to Local.bat" -Wait
-    if ($p.ExitCode -eq 0) {
-        Write-Host "Restore to local was completed!"
-    } else {
-        Write-Error "Restore to local was not completed!"
-    }
+    & "$TeleoptiDebug\Restore to Local.bat"
 }
 
 function New-TeleoptiChallenger {
