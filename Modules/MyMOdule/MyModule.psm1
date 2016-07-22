@@ -41,6 +41,18 @@ function Enter-MyDocuments {
 	Set-Location ([environment]::GetFolderPath("MyDocument"))
 }
 
+function Read-ConsoleColor {
+	return @{
+		Bg = $host.ui.rawui.BackgroundColor;
+		Fg = $host.ui.rawui.ForegroundColor;
+	}
+}
+
+function Update-ConsoleColor($colors) {
+	$host.ui.rawui.BackgroundColor = $colors.Bg
+    $host.ui.rawui.ForegroundColor = $colors.Fg
+}
+
 function Open-DailyWorkbench {
 	$workbenchDir = Join-Path ([environment]::GetFolderPath("MyDocument")) "Workbench"
 	$month = [DateTime]::Today.ToString("MMM")
@@ -110,7 +122,11 @@ function Start-TeleoptiRestoreToLocal {
 		return
 	}
     Write-Host "Starting Teleopti Restore To Local..."
+
+	$originalColors = Read-ConsoleColor
     & "$TeleoptiDebug\Restore to Local.bat"
+
+	Update-ConsoleColor($originalColors)
 }
 
 function New-TeleoptiChallenger {
@@ -210,10 +226,12 @@ function Start-TeleoptiBuild {
 		$startProj = $args[0]
 	}
 
+	$originalColors = Read-ConsoleColor
 	Hide-TeleoptiNodeBuild
 	Write-Host "Start building ..."
 	& ($RunMsbuild) /target:build $startProj
 	Show-TeleoptiNodeBuild
+	Update-ConsoleColor($originalColors)
 }
 
 function Search-Google {
@@ -224,6 +242,7 @@ function Search-Google {
 function Search-Bing {
 	& $RunChrome "https://www.bing.com/search?q=$args"
 }
+
 
 
 
@@ -239,5 +258,7 @@ Export-ModuleMember -Function 'Search-*'
 Export-ModuleMember -Function 'hide-*'
 Export-ModuleMember -Function 'Show-*'
 Export-ModuleMember -Function 'Open-*'
+Export-ModuleMember -Function 'Read-*'
+Export-ModuleMember -Function 'Update-*'
 Export-ModuleMember -Variable 'Teleopti*'
 Export-ModuleMember -Variable 'Run*'
