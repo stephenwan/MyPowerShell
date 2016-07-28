@@ -20,6 +20,8 @@ New-Alias -name bing -value Search-Bing -description "Search with Bing" -option 
 New-Alias -name desktop -value Enter-Desktop -description "Desktop" -option ReadOnly
 New-Alias -name documents -value Enter-MyDocuments -description "My Documents" -option ReadOnly
 New-Alias -name daily -value Open-DailyWorkbench -description "Open daily workbench" -option ReadOnly
+New-Alias -name door-open -value Open-Door -description "Zhima Kai Men" -option ReadOnly
+
 
 function Update-MyModule {
 	Remove-Module MyModule

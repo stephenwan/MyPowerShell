@@ -2,6 +2,7 @@ $TeleoptiDebug = "$Env:Teleopti\.debug-Setup"
 $TeleoptiWFM = "$Env:Teleopti\Teleopti.Ccc.Web\Teleopti.Ccc.Web\WFM"
 $TeleoptiStyleguide = "$Env:GitRepo\styleguide"
 $TeleoptiVpn = "typhoon","vpn"
+$TeleoptiDoor = "$Env:Door"
 
 $RunEmacs = " ${env:ProgramFiles(x86)}\GNU\emacs\bin\runemacs.exe"
 $RunChrome = " ${env:ProgramFiles(x86)}\Google\Chrome\Application\chrome.exe"
@@ -243,7 +244,9 @@ function Search-Bing {
 	& $RunChrome "https://www.bing.com/search?q=$args"
 }
 
-
+function Open-Door {
+	wget $TeleoptiDoor
+}
 
 
 Export-ModuleMember -Function 'Start-*'
