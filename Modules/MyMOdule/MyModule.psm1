@@ -35,37 +35,37 @@ function Enter-TeleoptiStyleguide {
 }
 
 function Enter-Desktop {
-	Set-Location ([environment]::GetFolderPath("Desktop"))
+    Set-Location ([environment]::GetFolderPath("Desktop"))
 }
 
 function Enter-MyDocuments {
-	Set-Location ([environment]::GetFolderPath("MyDocument"))
+    Set-Location ([environment]::GetFolderPath("MyDocument"))
 }
 
 function Read-ConsoleColor {
-	return @{
-		Bg = $host.ui.rawui.BackgroundColor;
-		Fg = $host.ui.rawui.ForegroundColor;
-	}
+    return @{
+        Bg = $host.ui.rawui.BackgroundColor;
+        Fg = $host.ui.rawui.ForegroundColor;
+    }
 }
 
 function Update-ConsoleColor($colors) {
-	$host.ui.rawui.BackgroundColor = $colors.Bg
+    $host.ui.rawui.BackgroundColor = $colors.Bg
     $host.ui.rawui.ForegroundColor = $colors.Fg
 }
 
 function Open-DailyWorkbench {
-	$workbenchDir = Join-Path ([environment]::GetFolderPath("MyDocument")) "Workbench"
-	$month = [DateTime]::Today.ToString("MMM")
-	$day = [DateTime]::Today.ToString("yyyy-MM-dd")
-	$container = Join-Path $workbenchDir $month
+    $workbenchDir = Join-Path ([environment]::GetFolderPath("MyDocument")) "Workbench"
+    $month = [DateTime]::Today.ToString("MMM")
+    $day = [DateTime]::Today.ToString("yyyy-MM-dd")
+    $container = Join-Path $workbenchDir $month
 
-	if (-not (Test-Path $container)) {
-		New-Item -ItemType Directory -Force -Path $container
-	}
+    if (-not (Test-Path $container)) {
+        New-Item -ItemType Directory -Force -Path $container
+    }
 
-	$dailyWork = Join-Path $container "$day.org"
-	Start-Emacs $dailyWork
+    $dailyWork = Join-Path $container "$day.org"
+    Start-Emacs $dailyWork
 }
 
 function Get-TeleoptiVpn {
@@ -118,24 +118,24 @@ function Enable-TeleoptiVpn {
 
 function Start-TeleoptiRestoreToLocal {
     $vpn = Enable-TeleoptiVpn
-	if ($vpn -eq $null) {
-		Write-Error "Aborted! Cannot establish VPN connection."
-		return
-	}
+    if ($vpn -eq $null) {
+        Write-Error "Aborted! Cannot establish VPN connection."
+        return
+    }
     Write-Host "Starting Teleopti Restore To Local..."
 
-	$originalColors = Read-ConsoleColor
+    $originalColors = Read-ConsoleColor
     & "$TeleoptiDebug\Restore to Local.bat"
 
-	Update-ConsoleColor($originalColors)
+    Update-ConsoleColor($originalColors)
 }
 
 function New-TeleoptiChallenger {
     $vpn = Enable-TeleoptiVpn
-	if ($vpn -eq $null) {
-		Write-Error "Aborted! Cannot establish VPN connection."
-		return
-	}
+    if ($vpn -eq $null) {
+        Write-Error "Aborted! Cannot establish VPN connection."
+        return
+    }
 
     $url = "http://challenger:8080/Kanban/#/board/0"
     & $RunChrome $url
@@ -144,10 +144,10 @@ function New-TeleoptiChallenger {
 
 function New-DevBuild {
     $vpn = Enable-TeleoptiVpn
-	if ($vpn -eq $null) {
-		Write-Error "Aborted! Cannot establish VPN connection."
-		return
-	}
+    if ($vpn -eq $null) {
+        Write-Error "Aborted! Cannot establish VPN connection."
+        return
+    }
 
     $url = "http://devbuild01.toptinet.teleopti.com/project.html?projectId=TeleoptiWFM&tab=projectOverview"
     & $RunChrome $url
@@ -162,90 +162,90 @@ function New-GitHub {
 }
 
 function Start-TeleoptiSourcePull {
-	$vpn = Enable-TeleoptiVpn
-	if ($vpn -eq $null) {
-		Write-Error "Aborted! Cannot establish VPN connection."
-		return
-	}
-	Enter-TeleoptiWFM
-	hg pull
+    $vpn = Enable-TeleoptiVpn
+    if ($vpn -eq $null) {
+        Write-Error "Aborted! Cannot establish VPN connection."
+        return
+    }
+    Enter-TeleoptiWFM
+    hg pull
 }
 
 
 function open-file($path) {
-	Start-Process explorer.exe -ArgumentList "/select,$path"
+    Start-Process explorer.exe -ArgumentList "/select,$path"
 }
 
 function Select-File {
-	Begin {
-		$paths = @()
-		foreach ($p in $args) {
-			if ([string]::IsNullOrWhiteSpace($p)) {
-				return
-			}
-			$path = Resolve-Path $p
-			$paths += "$path"
-			open-file -path $path
-		}
-	}
-	Process {
-		if ($_ -eq $null) {
-			return
-		}
-		$path = Resolve-Path $_
-		$paths += "$path"
-		open-file -path $path
-	}
-	End {
-		return $paths
-	}
+    Begin {
+        $paths = @()
+        foreach ($p in $args) {
+            if ([string]::IsNullOrWhiteSpace($p)) {
+                return
+            }
+            $path = Resolve-Path $p
+            $paths += "$path"
+            open-file -path $path
+        }
+    }
+    Process {
+        if ($_ -eq $null) {
+            return
+        }
+        $path = Resolve-Path $_
+        $paths += "$path"
+        open-file -path $path
+    }
+    End {
+        return $paths
+    }
 }
 
 function Find-HgFile {
-	Enter-TeleoptiWFM
-	if ($args.Length -eq 0) {
-		return
-	}
-	$pattern = $args[0]
-	hg file | Select-String -pattern $pattern | ForEach { Resolve-Path $_ }
+    Enter-TeleoptiWFM
+    if ($args.Length -eq 0) {
+        return
+    }
+    $pattern = $args[0]
+    hg file | Select-String -pattern $pattern | ForEach { Resolve-Path $_ }
 }
 
 function Hide-TeleoptiNodeBuild {
-	(Get-Content $TeleoptiNodeBuildTarget) -replace '(<Exec\s.*?/>)','<!--$1-->' | Set-Content -Path $TeleoptiNodeBuildTarget
-	Write-Host "Muted Node-related Execs in Teleopti Build."
+    (Get-Content $TeleoptiNodeBuildTarget) -replace '(?<!<!--\s*)(<Exec\s.*?/>)(?!\s*-->)','<!--$1-->' | Set-Content -Path $TeleoptiNodeBuildTarget
+    Write-Host "Muted Node-related Execs in Teleopti Build."
 }
 
 function Show-TeleoptiNodeBuild {
-	(Get-Content $TeleoptiNodeBuildTarget)  -replace '<!--(<Exec.*?/>)-->','$1' | Set-Content -Path $TeleoptiNodeBuildTarget
-	Write-Host "Restored Node-related Execs in Teleopti Build."
+    (Get-Content $TeleoptiNodeBuildTarget)  -replace '<!--(<Exec.*?/>)-->','$1' | Set-Content -Path $TeleoptiNodeBuildTarget
+    Write-Host "Restored Node-related Execs in Teleopti Build."
 }
 
 function Start-TeleoptiBuild {
-	if ($args.Length -eq 0) {
-		$startProj = $TeleoptiSln
-	} else {
-		$startProj = $args[0]
-	}
+    if ($args.Length -eq 0) {
+        $startProj = $TeleoptiSln
+    } else {
+        $startProj = $args[0]
+    }
 
-	$originalColors = Read-ConsoleColor
-	Hide-TeleoptiNodeBuild
-	Write-Host "Start building ..."
-	& ($RunMsbuild) /target:build $startProj
-	Show-TeleoptiNodeBuild
-	Update-ConsoleColor($originalColors)
+    $originalColors = Read-ConsoleColor
+    Hide-TeleoptiNodeBuild
+    Write-Host "Start building ..."
+    & ($RunMsbuild) /target:build $startProj
+    Show-TeleoptiNodeBuild
+    Update-ConsoleColor($originalColors)
 }
 
 function Search-Google {
-	& $RunChrome "https://www.google.com/search?q=$args"
+    & $RunChrome "https://www.google.com/search?q=$args"
 }
 
 
 function Search-Bing {
-	& $RunChrome "https://www.bing.com/search?q=$args"
+    & $RunChrome "https://www.bing.com/search?q=$args"
 }
 
 function Open-Door {
-	wget $TeleoptiDoor
+    wget $TeleoptiDoor
 }
 
 

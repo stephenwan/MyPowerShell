@@ -24,6 +24,6 @@ New-Alias -name door-open -value Open-Door -description "Zhima Kai Men" -option 
 
 
 function Update-MyModule {
-	Remove-Module MyModule
-	Import-Module MyModule
+    Remove-Module MyModule
+    Import-Module MyModule
 }
