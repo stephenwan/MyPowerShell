@@ -12,6 +12,7 @@ $RunMsbuild = " ${env:ProgramFiles(x86)}\MSBuild\14.0\Bin\MSBuild.exe"
 $TeleoptiNodeBuildTarget = "$TeleoptiWFM\..\.node\node.targets"
 $TeleoptiSln = "$TeleoptiDebug\..\CruiseControl.sln"
 $TeleoptiWeb = "$TeleoptiWFM\..\Teleopti.Ccc.Web.csproj"
+$TeleoptiFeatureToggle = "$TeleoptiDebug\..\Domain\FeatureFlags\toggles.txt"
 
 function Start-Emacs {
     if ($args.Length -eq 0) {
@@ -213,6 +214,11 @@ function Find-HgFile {
 function Hide-TeleoptiNodeBuild {
     (Get-Content $TeleoptiNodeBuildTarget) -replace '(?<!<!--\s*)(<Exec\s.*?/>)(?!\s*-->)','<!--$1-->' | Set-Content -Path $TeleoptiNodeBuildTarget
     Write-Host "Muted Node-related Execs in Teleopti Build."
+}
+
+function Hide-EtlSpeedUps {
+    (Get-Content $TeleoptiFeatureToggle) -replace '^(ETL_SpeedUp\w+\s+=\s*)(?:RC|true)(.*)$','$1 false $2' | Set-Content -Path $TeleoptiFeatureToggle
+    Write-Host "Muted ETL Speedups."
 }
 
 function Show-TeleoptiNodeBuild {
