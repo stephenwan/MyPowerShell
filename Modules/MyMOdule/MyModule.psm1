@@ -2,7 +2,6 @@ $TeleoptiDebug = "$Env:Teleopti\.debug-Setup"
 $TeleoptiWFM = "$Env:Teleopti\Teleopti.Ccc.Web\Teleopti.Ccc.Web\WFM"
 $TeleoptiStyleguide = "$Env:GitRepo\styleguide"
 $TeleoptiVpn = "typhoon","vpn"
-$TeleoptiDoor = "$Env:Door"
 
 $RunEmacs = " ${env:ProgramFiles(x86)}\GNU\emacs\bin\runemacs.exe"
 $RunChrome = " ${env:ProgramFiles(x86)}\Google\Chrome\Application\chrome.exe"
@@ -13,6 +12,9 @@ $TeleoptiNodeBuildTarget = "$TeleoptiWFM\..\.node\node.targets"
 $TeleoptiSln = "$TeleoptiDebug\..\CruiseControl.sln"
 $TeleoptiWeb = "$TeleoptiWFM\..\Teleopti.Ccc.Web.csproj"
 $TeleoptiFeatureToggle = "$TeleoptiDebug\..\Domain\FeatureFlags\toggles.txt"
+
+$DoorMAC = "$Env:DoorMAC"
+
 
 function Start-Emacs {
     if ($args.Length -eq 0) {
@@ -150,7 +152,7 @@ function New-DevBuild {
         return
     }
 
-    $url = "http://devbuild01.toptinet.teleopti.com/project.html?projectId=TeleoptiWFM&tab=projectOverview"
+    $url = "http://buildsrv01/project.html?projectId=TeleoptiWFM"
     & $RunChrome $url
     Write-Host "New devbuild started in Chrome."
 }
@@ -251,7 +253,13 @@ function Search-Bing {
 }
 
 function Open-Door {
-    wget $TeleoptiDoor
+    wget (Show-DoorIp)
+}
+
+function Show-DoorIP {
+    if ((arp -a | Select-String -pattern $DoorMAC) -match "([\d.]+)") {
+        $matches[0]
+    }
 }
 
 
