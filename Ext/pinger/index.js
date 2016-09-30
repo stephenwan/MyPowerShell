@@ -7,10 +7,6 @@ var session = ping.createSession({
     packetSize: 16
 });
 
-
-var target1 = "192.168.10.100";
-var target2 = "192.168.10.101";
-
 var pingP = Promise.promisify(session.pingHost).bind(session);
 
 var targets = [];
