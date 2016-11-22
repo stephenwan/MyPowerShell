@@ -1,6 +1,7 @@
 $TeleoptiDebug = "$Env:Teleopti\.debug-Setup"
 $TeleoptiWFM = "$Env:Teleopti\Teleopti.Ccc.Web\Teleopti.Ccc.Web\WFM"
 $TeleoptiStyleguide = "$Env:GitRepo\styleguide"
+$Repo = "$Env:GitRepo"
 $TeleoptiVpn = "typhoon","vpn"
 
 $RunEmacs = " ${env:ProgramFiles(x86)}\GNU\emacs\bin\runemacs.exe"
@@ -14,7 +15,7 @@ $TeleoptiWeb = "$TeleoptiWFM\..\Teleopti.Ccc.Web.csproj"
 $TeleoptiFeatureToggle = "$TeleoptiDebug\..\Domain\FeatureFlags\toggles.txt"
 
 $DoorMAC = "$Env:DoorMAC"
-
+$DoorIP = "$Env:DoorIP"
 
 function Start-Emacs {
     if ($args.Length -eq 0) {
@@ -43,6 +44,10 @@ function Enter-Desktop {
 
 function Enter-MyDocuments {
     Set-Location ([environment]::GetFolderPath("MyDocument"))
+}
+
+function Enter-Repo {
+    Set-Location $Repo
 }
 
 function Read-ConsoleColor {
@@ -253,7 +258,7 @@ function Search-Bing {
 }
 
 function Open-Door {
-    wget (Show-DoorIp)
+    wget $DoorIP
 }
 
 function Show-DoorIP {

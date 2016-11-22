@@ -21,6 +21,7 @@ New-Alias -name desktop -value Enter-Desktop -description "Desktop" -option Read
 New-Alias -name documents -value Enter-MyDocuments -description "My Documents" -option ReadOnly
 New-Alias -name daily -value Open-DailyWorkbench -description "Open daily workbench" -option ReadOnly
 New-Alias -name door-open -value Open-Door -description "Zhima Kai Men" -option ReadOnly
+New-Alias -name repo -value Enter-Repo -description "Goto repo" -option ReadOnly
 
 
 function Update-MyModule {
