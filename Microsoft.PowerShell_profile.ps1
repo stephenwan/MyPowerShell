@@ -12,8 +12,8 @@ New-Alias -name documents -value Enter-MyDocuments -description "My Documents" -
 New-Alias -name daily -value Open-DailyWorkbench -description "Open daily workbench" -option ReadOnly
 New-Alias -name myrepo -value Enter-MyRepo -description "Goto repo" -option ReadOnly
 New-Alias -name crepo -value Enter-CompanyRepo -description "Goto company repo" -option ReadOnly
-New-Alias -name crepoweb -value New-CompanyRepoWeb -description "Got company repo web" -option ReadOnly
-
+New-Alias -name crepoweb -value New-CompanyRepoWeb -description "Goto company repo web" -option ReadOnly
+New-ALias -name intranet -value New-IntranetWeb -description "Goto company intranet web" -option ReadOnly
 
 function Update-MyModule {
     Remove-Module MyModule

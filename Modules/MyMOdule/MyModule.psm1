@@ -2,6 +2,7 @@ $CompanyRepo = "$Env:CompanyRepo"
 $CompanyRepoUrl = "$Env:CompanyRepoUrl"
 $MyRepo = "$Env:MyRepo"
 $MyRepoUrl = "$Env:MyRepoUrl"
+$IntranetUrl = "$Env:IntranetUrl"
 
 
 $RunEmacs = " ${env:ProgramFiles(x86)}\GNU\emacs\bin\runemacs.exe"
@@ -19,6 +20,10 @@ function Start-Emacs {
 
 function New-CompanyRepoWeb {
     & $RunChrome "$CompanyRepoUrl"
+}
+
+function New-IntranetWeb {
+    & $RunChrome "$IntranetUrl"
 }
 
 function Enter-MyRepo {
