@@ -3,6 +3,11 @@ $CompanyRepoUrl = "$Env:CompanyRepoUrl"
 $MyRepo = "$Env:MyRepo"
 $MyRepoUrl = "$Env:MyRepoUrl"
 $IntranetUrl = "$Env:IntranetUrl"
+$CompanyBugTrackerUrl = "$Env:CompanyBugTracker"
+$CompanyUniversityUrl = "$Env:CompanyUniversity"
+$CompanyFairsailUrl = "$Env:FairSailUrl"
+$CloudSelfServiceUrl = "$Env:CloudSelfService"
+$CloudAWSUrl = "$Env:CloudAWS"
 
 
 $RunEmacs = " ${env:ProgramFiles(x86)}\GNU\emacs\bin\runemacs.exe"
@@ -18,12 +23,32 @@ function Start-Emacs {
     }
 }
 
+function New-CloudSelfServiceWeb {
+    & $RunChrome "$CloudSelfServiceUrl"
+}
+
+function New-CloudAWSWeb {
+    & $RunChrome "$CloudAWSUrl"
+}
+
+function New-CompanyFairSailWeb {
+    & $RunChrome "$CompanyFairsailUrl"
+}
+
+function New-CompanyUniversityWeb {
+    & $RunChrome "$CompanyUniversityUrl"
+}
+
 function New-CompanyRepoWeb {
     & $RunChrome "$CompanyRepoUrl"
 }
 
 function New-IntranetWeb {
     & $RunChrome "$IntranetUrl"
+}
+
+function New-CompanyBugTrackerWeb {
+    & $RunChrome "$CompanyBugTrackerUrl"
 }
 
 function Enter-MyRepo {

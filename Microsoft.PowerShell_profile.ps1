@@ -14,6 +14,11 @@ New-Alias -name myrepo -value Enter-MyRepo -description "Goto repo" -option Read
 New-Alias -name crepo -value Enter-CompanyRepo -description "Goto company repo" -option ReadOnly
 New-Alias -name crepoweb -value New-CompanyRepoWeb -description "Goto company repo web" -option ReadOnly
 New-ALias -name intranet -value New-IntranetWeb -description "Goto company intranet web" -option ReadOnly
+New-ALias -name jira -value New-CompanyBugTrackerWeb -description "Goto company bug tracker web" -option ReadOnly
+New-ALias -name university -value New-CompanyUniversityWeb -description "Goto company university web" -option ReadOnly
+New-ALias -name fairsail -value New-CompanyFairSailWeb -description "Goto company fairsail web" -option ReadOnly
+New-ALias -name cloud-selfservice -value New-CloudSelfServiceWeb -description "Goto cloud self service web" -option ReadOnly
+New-ALias -name cloud-aws -value New-CloudAWSWeb -description "Goto AWS web" -option ReadOnly
 
 function Update-MyModule {
     Remove-Module MyModule
